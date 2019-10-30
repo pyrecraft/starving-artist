@@ -1,18 +1,36 @@
 extends Node2D
 
+const initial_state = preload('res://godot_redux/initial_state.gd')
+
 #var background_color = Color('#ffb5b5') <Pink>
 #var brick_color = Color('#db7d8a') <Pink>
 var background_color = Color('#2a363b')
 var brick_color = Color('#52616b')
 
+var state_L
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	store.subscribe(self, "_on_store_changed")
+	var init_state = initial_state.get_state()
+	state_L = init_state['game']['state']
 
 func _draw():
-	print('Drawing background')
 	var viewport_size = get_viewport().size
 	draw_rect(Rect2(Vector2(0, 0), viewport_size), background_color)
+	if state_L != Constants.State.SELL:
+		draw_bricks()
+
+func _on_store_changed(name, state):
+	if store.get_state() == null:
+		return
+	if store.get_state()['game']['state'] != null:
+		state_L = store.get_state()['game']['state']
+		if state_L == Constants.State.SELL:
+			update()
+
+func draw_bricks():
+	var viewport_size = get_viewport().size
 	viewport_size.y *= .70
 	var brick_offset_x = 25
 	var brick_offset_y = 25

@@ -1,11 +1,19 @@
 extends Node2D
 
+const initial_state = preload('res://godot_redux/initial_state.gd')
+
 var color = Color.white
 var draw_points = []
+var grid_L = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	store.subscribe(self, "_on_store_changed")
+	if store.get_state() != null and store.get_state()['canvas']['grid'] != null:
+		grid_L = store.get_state()['canvas']['grid']
+	else:
+		var init_state = initial_state.get_state()
+		grid_L = init_state['canvas']['grid']
 
 func set_color(c):
 	color = c
@@ -20,14 +28,65 @@ func _draw():
 		if i > 0:
 			set_tangent_vector(draw_points[i-1], draw_points[i])
 		if i > 1:
+			pass
 			draw_connecting_rect(draw_points[i-2], draw_points[i-1])
+			add_line_to_paint_grid(draw_points[i-2], draw_points[i-1])
 		draw_circle(draw_points[i].vec, draw_points[i].radius, draw_points[i].color)
+		add_square_to_paint_grid(draw_points[i].vec, draw_points[i].radius, draw_points[i].color)
 	if len(draw_points) > 1:
 		var last_draw_point = draw_points[len(draw_points)-1]
 		last_draw_point.set_tangent_vecs(Vector2(last_draw_point.vec.x - last_draw_point.radius, last_draw_point.vec.y), \
 			Vector2(last_draw_point.vec.x + last_draw_point.radius, last_draw_point.vec.y))
 		set_scapegoat_vector(draw_points[len(draw_points) - 2], last_draw_point)
 		draw_connecting_rect(draw_points[len(draw_points) - 2], last_draw_point)
+		add_line_to_paint_grid(draw_points[len(draw_points) - 2], last_draw_point)
+
+func update_grid_state():
+	store.dispatch(actions.canvas_set_grid(grid_L))
+
+func add_line_to_paint_grid(draw_point_one, draw_point_two):
+	var radius_average = max(draw_point_one.radius, draw_point_two.radius)
+	var vector_distance = draw_point_one.vec.distance_to(draw_point_two.vec)
+	if vector_distance < 20:
+		return
+	var step_count = min(sqrt(vector_distance) / radius_average, 10.0)
+#	print('Vector Distance: %s' % vector_distance)
+#	print('Radius: %s' % radius_average)
+#	print('Step Count: %s' % step_count)
+#	print('draw_point_one vec: %s' % draw_point_one.vec)
+#	print('draw_point_two vec: %s' % draw_point_two.vec)
+	
+	var x_increment = abs((draw_point_two.vec.x - draw_point_one.vec.x) / float(step_count))
+	var y_increment = abs((draw_point_two.vec.y - draw_point_one.vec.y) / float(step_count))
+	var x = draw_point_one.vec.x
+	var y = draw_point_one.vec.y
+	
+#	print('x_increment: %s' % x_increment)
+#	print('y_increment: %s' % y_increment)
+#	print('x: %s' % x)
+#	print('y: %s' % y)
+	
+	if x < draw_point_two.vec.x and y < draw_point_two.vec.y:
+		while (x < draw_point_two.vec.x and y < draw_point_two.vec.y):
+			add_square_to_paint_grid(Vector2(x, y), radius_average, draw_point_one.color)
+			y += y_increment
+			x += x_increment
+	elif x > draw_point_two.vec.x and y < draw_point_two.vec.y:
+		while (x > draw_point_two.vec.x and y < draw_point_two.vec.y):
+			add_square_to_paint_grid(Vector2(x, y), radius_average, draw_point_one.color)
+			y += y_increment
+			x -= x_increment
+	elif x > draw_point_two.vec.x and y > draw_point_two.vec.y:
+		while (x > draw_point_two.vec.x and y > draw_point_two.vec.y):
+			add_square_to_paint_grid(Vector2(x, y), radius_average, draw_point_one.color)
+			y -= y_increment
+			x -= x_increment
+	elif x < draw_point_two.vec.x and y > draw_point_two.vec.y:
+		while (x < draw_point_two.vec.x and y > draw_point_two.vec.y):
+#			print('Adding Square at %s' % Vector2(x, y))
+			add_square_to_paint_grid(Vector2(x, y), radius_average, draw_point_one.color)
+			y -= y_increment
+			x += x_increment
 
 func draw_connecting_rect(draw_point_one, draw_point_two):
 	var tangent_arr = [
@@ -39,6 +98,23 @@ func draw_connecting_rect(draw_point_one, draw_point_two):
 	var shape = PoolVector2Array(sort_vec_array(tangent_arr))
 	draw_colored_polygon(shape, draw_point_one.color)
 	update()
+
+func _on_store_changed(name, state):
+	if store.get_state() == null:
+		return
+	if store.get_state()['canvas']['grid'] != null:
+		grid_L = store.get_state()['canvas']['grid']
+		update()
+
+func add_square_to_paint_grid(pos, rad, color):
+	var diameter = rad * 2
+	var x = pos.x - diameter
+	while x < pos.x + diameter:
+		var y = pos.y - diameter
+		while y < pos.y + diameter:
+			grid_L[y][x] = color
+			y += 1
+		x += 1
 
 func sort_vec_array(vec_arr):
 	var x_total = 0

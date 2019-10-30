@@ -8,6 +8,8 @@ const easel_color = Color('#aa8f79')
 const easel_shadow_color = Color('#aa8f79')
 
 var dimensions_L = Vector2(0, 0)
+var state_L
+
 var canvas_art_instance
 
 # Called when the node enters the scene tree for the first time.
@@ -15,25 +17,31 @@ func _ready():
 	store.subscribe(self, "_on_store_changed")
 	var init_state = initial_state.get_state()
 	dimensions_L = init_state['canvas']['dimensions']
+	state_L = init_state['game']['state']
 	canvas_art_instance = canvas_art.instance()
 	add_child(canvas_art_instance)
 
 func _on_store_changed(name, state):
-	if store.get_state() != null and store.get_state()['canvas']['dimensions'] != null:
-		print('Canvas Dimensions changed to : ' + str(store.get_state()['canvas']['dimensions']))
+	if store.get_state() == null:
+		return
+	if store.get_state()['canvas']['dimensions'] != null:
 		dimensions_L = store.get_state()['canvas']['dimensions']
+	if store.get_state()['game']['state'] != null:
+		state_L = store.get_state()['game']['state']
+		if state_L == Constants.State.SELL:
+			update()
 
 func _draw():
-	draw_easel(0, easel_color)
+	if state_L != Constants.State.SELL:
+		draw_easel(0, easel_color)
 	draw_blank_canvas()
 
 func clear_canvas_art():
-	canvas_art_instance.queue_free()
+	canvas_art_instance.free()
 	canvas_art_instance = canvas_art.instance()
 	add_child(canvas_art_instance)
 
 func draw_easel(viewport_offset, color):
-	print('Drawing easel')
 	var circle_radius = 15
 	var border_offset_percent = .05
 	var middle_offset_percent = .15
@@ -67,16 +75,16 @@ func draw_blank_canvas():
 	if dimensions_L.x == 0 or dimensions_L.y == 0:
 		print('Skipping `draw_blank_canvas()` call because dimensions haven\'t been set yet')
 		return
-	print('Drawing blank canvas')
 	var viewport_size = get_viewport().size
 	var canvas_offset_x = int((viewport_size.x - dimensions_L.x) / 2)
 	var canvas_offset_y = int((viewport_size.y - dimensions_L.y) / 2) - 75
 	var circle_radius = 10
 	
-	# Easel background
-	draw_rounded_rect(Rect2(Vector2(canvas_offset_x, canvas_offset_y + 7), dimensions_L), easel_shadow_color, circle_radius)
-	draw_rounded_rect(Rect2(Vector2(viewport_size.x / 2.0 - (dimensions_L.x / 4.0), canvas_offset_y - 7), \
-		Vector2(dimensions_L.x / 2, dimensions_L.y)), easel_shadow_color, circle_radius)
+	if state_L != Constants.State.SELL:
+		# Easel background
+		draw_rounded_rect(Rect2(Vector2(canvas_offset_x, canvas_offset_y + 7), dimensions_L), easel_shadow_color, circle_radius)
+		draw_rounded_rect(Rect2(Vector2(viewport_size.x / 2.0 - (dimensions_L.x / 4.0), canvas_offset_y - 7), \
+			Vector2(dimensions_L.x / 2, dimensions_L.y)), easel_shadow_color, circle_radius)
 	
 	#Canvas
 	draw_rounded_rect(Rect2(Vector2(canvas_offset_x, canvas_offset_y), dimensions_L), canvas_color, circle_radius)

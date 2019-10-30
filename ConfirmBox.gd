@@ -55,11 +55,9 @@ func set_confirm_type(t):
 			set_question_text(SELL_TEXT_MESSAGE)
 
 func set_question_text(t):
-	print(t)
 	$QuestionText.bbcode_text = t
 
 func _on_YesButton_clicked():
-	print('Yes button clicked')
 	match confirm_type:
 		Constants.ConfirmBox.CLEAR:
 			store.dispatch(actions.game_set_state(Constants.State.CLEAR))
@@ -68,7 +66,6 @@ func _on_YesButton_clicked():
 	queue_free()
 
 func _on_NoButton_clicked():
-	print('No button clicked')
 	close_window()
 
 func close_window():

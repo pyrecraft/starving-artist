@@ -1,5 +1,7 @@
 extends Node
 
+var DEBUG_MODE = false
+
 enum State {
 	PAINT,
 	CONFIRM_CLEAR,

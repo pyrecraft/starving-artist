@@ -90,7 +90,6 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		if !is_clicked:
 			is_clicked = true
 		else:
-			print('Clicked Clear')
 			is_clicked = false
 			store.dispatch(actions.game_set_state(Constants.State.CONFIRM_CLEAR))
 		update()

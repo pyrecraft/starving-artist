@@ -13,6 +13,7 @@ var font_position = Vector2(0, 0)
 var box_position = Vector2(0, 0)
 var box_dimensions = Vector2(0, 0)
 var text_offset_x = 13
+var text_offset_y = 0
 var is_hover = false
 var is_clicked = false
 var text = ''
@@ -69,8 +70,13 @@ func set_text_offset_x(val):
 	font_position = get_starting_font_position()
 	update()
 
+func set_text_offset_y(val):
+	text_offset_y = val
+	font_position = get_starting_font_position()
+	update()
+
 func get_starting_font_position():
-	return Vector2(box_position.x + text_offset_x, box_position.y + (box_dimensions.y * (3.75/5.0)))
+	return Vector2(box_position.x + text_offset_x, text_offset_y + box_position.y + (box_dimensions.y * (3.75/5.0)))
 
 func _draw():
 	if is_hover:
@@ -112,7 +118,6 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		if !is_clicked:
 			is_clicked = true
 		else:
-			print('Clicked!')
 			emit_signal("clicked")
 			is_clicked = false
 		update()

@@ -26,6 +26,7 @@ action_types="*res://godot_redux/action_types.gd"
 actions="*res://godot_redux/actions.gd"
 reducers="*res://godot_redux/reducers.gd"
 Constants="*res://Constants.gd"
+SaleLogic="*res://SaleLogic.gd"
 
 [display]
 
