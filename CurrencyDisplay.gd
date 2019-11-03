@@ -7,6 +7,10 @@ const money_shadow_color = Color('#393e46')
 
 var money_L = 0
 var font_position = Vector2(0, 0)
+var timer_index = 0
+var slice_count = 19.0
+var slice_amount = 0
+var final_money_amount
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,10 +29,23 @@ func _on_store_changed(name, state):
 	if store.get_state() == null:
 		return
 	if store.get_state()['game']['money'] != null:
-		money_L = store.get_state()['game']['money']
-		update()
+		var amount_diff = store.get_state()['game']['money'] - money_L
+		final_money_amount = store.get_state()['game']['money']
+#		money_L = store.get_state()['game']['money']
+		timer_index = 0
+		slice_amount = float(amount_diff) / slice_count
+		$Timer.start()
 
 func _draw():
 	draw_string(waku_font, Vector2(font_position.x * 1.05, font_position.y * 1.06), \
-		'$%s' % str(money_L), money_shadow_color)
-	draw_string(waku_font, font_position, '$%s' % str(money_L), money_color)
+		'$%s' % str(int(money_L)), money_shadow_color)
+	draw_string(waku_font, font_position, '$%s' % str(int(money_L)), money_color)
+
+func _on_Timer_timeout():
+	timer_index += 1
+	if timer_index == int(slice_count):
+		money_L = final_money_amount
+	else:
+		money_L += slice_amount
+		$Timer.start()
+	update()

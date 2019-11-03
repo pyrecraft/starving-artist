@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BuyPaint.wav-96ff4ecfdb17e8e0ebbf922568e3c8c2.sample"
+
+[deps]
+
+source_file="res://BuyPaint.wav"
+dest_files=[ "res://.import/BuyPaint.wav-96ff4ecfdb17e8e0ebbf922568e3c8c2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

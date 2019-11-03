@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ConfirmBox.gd" type="Script" id=1]
 [ext_resource path="res://WakuWakuFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Sell_screen.wav" type="AudioStream" id=3]
 
 [node name="ConfirmBox" type="Node2D"]
 pause_mode = 2
@@ -24,3 +25,6 @@ margin_bottom = 361.111
 custom_fonts/normal_font = ExtResource( 2 )
 text = "This cannot be undone."
 scroll_active = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/paper-rustling.wav-ae830c3e9f438d066c748be73b31cf75.sample"
+
+[deps]
+
+source_file="res://paper-rustling.wav"
+dest_files=[ "res://.import/paper-rustling.wav-ae830c3e9f438d066c748be73b31cf75.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

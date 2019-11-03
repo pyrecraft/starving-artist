@@ -1,8 +1,12 @@
 extends Node2D
 
+const initial_state = preload('res://godot_redux/initial_state.gd')
+
 const button_inst = preload('res://Button.tscn')
-const background_color = Color('#52616b')
+const background_color = Color('#768996')
 const background_shadow_color = Color('#2a363b')
+
+var mission_L
 
 var starting_point
 var dimensions
@@ -14,6 +18,7 @@ func _ready():
 	dimensions = Vector2(viewport_size.x * (3.0/4.0), viewport_size.y * (2.0/3.0))
 	
 	var close_button = button_inst.instance()
+	mission_L = store.get_state()['game']['mission']
 	add_child(close_button)
 	close_button.set_box_position(Vector2(900, 60))
 	close_button.set_box_dimensions(30, 30)
@@ -23,6 +28,8 @@ func _ready():
 	close_button.set_colors(Color('#f85f73'), Color('#f63e56'))
 	
 	close_button.connect("clicked", self, "_on_CloseButton_clicked")
+	
+	assign_headlines(mission_L.main_headline, mission_L.lower_headline, mission_L.side_headline)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -31,11 +38,18 @@ func _input(event):
 		elif event.position.y < starting_point.y or event.position.y > starting_point.y + dimensions.y:
 			close_window()
 
+func assign_headlines(large, lower, side):
+	$MainHeadline.bbcode_text = large
+	$LowerHeadline.bbcode_text = lower
+	$SideHeadline.bbcode_text = side
+
 func _on_CloseButton_clicked():
-	print('Close button clicked')
 	close_window()
 
 func close_window():
+	if mission_L.max_payout == 999: # Game End
+		return
+	store.dispatch(actions.game_set_state(Constants.State.PAINT))
 	queue_free()
 
 func _draw():
@@ -53,7 +67,6 @@ func draw_side_headline_lines():
 	var in_between_space_y = ((starting_point.y + dimensions.y) - ($SideHeadline.rect_position.y + $SideHeadline.rect_size.y))
 	var line_count = 7.0
 	var space_diff = in_between_space_y / line_count
-	print(space_diff)
 	var current_line_y = $SideHeadline.rect_position.y + $SideHeadline.rect_size.y + space_diff
 	var starting_x = $SideHeadline.rect_position.x
 	var ending_x = $SideHeadline.rect_position.x + $SideHeadline.rect_size.x
@@ -74,7 +87,6 @@ func draw_lower_headline_lines():
 	var in_between_space_y = ((starting_point.y + dimensions.y) - ($LowerHeadline.rect_position.y + $LowerHeadline.rect_size.y))
 	var line_count = 5.0
 	var space_diff = in_between_space_y / line_count
-	print(space_diff)
 	var current_line_y = $LowerHeadline.rect_position.y + $LowerHeadline.rect_size.y + space_diff
 	var starting_x = $LowerHeadline.rect_position.x
 	var ending_x = $LowerHeadline.rect_position.x + $LowerHeadline.rect_size.x
@@ -88,7 +100,6 @@ func draw_main_headline_lines():
 	var in_between_space_y = ($LowerHeadline.rect_position.y - ($MainHeadline.rect_position.y + $MainHeadline.rect_size.y))
 	var line_count = 5.0
 	var space_diff = in_between_space_y / line_count
-	print(space_diff)
 	var current_line_y = $MainHeadline.rect_position.y + $MainHeadline.rect_size.y + space_diff
 	var starting_x = $MainHeadline.rect_position.x
 	var ending_x = $MainHeadline.rect_position.x + $MainHeadline.rect_size.x

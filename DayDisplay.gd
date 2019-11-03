@@ -2,7 +2,8 @@ extends Node2D
 
 const initial_state = preload('res://godot_redux/initial_state.gd')
 const waku_font = preload('res://WakuWakuFont.tres')
-const money_color = Color('#62d2a2')
+#const money_color = Color('#62d2a2')
+const money_color = Color('#fbf0f0')
 const money_shadow_color = Color('#393e46')
 
 var day_L = 0

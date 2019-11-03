@@ -37,7 +37,9 @@ func _draw():
 	draw_blank_canvas()
 
 func clear_canvas_art():
-	canvas_art_instance.free()
+	canvas_art_instance.clear_all_children()
+	canvas_art_instance.queue_free()
+#	$Timer.start()
 	canvas_art_instance = canvas_art.instance()
 	add_child(canvas_art_instance)
 
@@ -73,18 +75,18 @@ func draw_easel(viewport_offset, color):
 
 func draw_blank_canvas():
 	if dimensions_L.x == 0 or dimensions_L.y == 0:
-		print('Skipping `draw_blank_canvas()` call because dimensions haven\'t been set yet')
+#		print('Skipping `draw_blank_canvas()` call because dimensions haven\'t been set yet')
 		return
 	var viewport_size = get_viewport().size
 	var canvas_offset_x = int((viewport_size.x - dimensions_L.x) / 2)
 	var canvas_offset_y = int((viewport_size.y - dimensions_L.y) / 2) - 75
 	var circle_radius = 10
 	
+	# Easel background
 	if state_L != Constants.State.SELL:
-		# Easel background
-		draw_rounded_rect(Rect2(Vector2(canvas_offset_x, canvas_offset_y + 7), dimensions_L), easel_shadow_color, circle_radius)
 		draw_rounded_rect(Rect2(Vector2(viewport_size.x / 2.0 - (dimensions_L.x / 4.0), canvas_offset_y - 7), \
 			Vector2(dimensions_L.x / 2, dimensions_L.y)), easel_shadow_color, circle_radius)
+	draw_rounded_rect(Rect2(Vector2(canvas_offset_x, canvas_offset_y + 7), dimensions_L), easel_shadow_color, circle_radius)
 	
 	#Canvas
 	draw_rounded_rect(Rect2(Vector2(canvas_offset_x, canvas_offset_y), dimensions_L), canvas_color, circle_radius)
@@ -98,3 +100,8 @@ func draw_rounded_rect(rect, color, circle_radius):
 		Vector2(rect.size.x + (circle_radius * 2), rect.size.y)), color)
 	draw_rect(Rect2(Vector2(rect.position.x, rect.position.y - circle_radius), \
 		Vector2(rect.size.x, rect.size.y + (circle_radius * 2))), color)
+
+func _on_Timer_timeout():
+	pass
+#	canvas_art_instance = canvas_art.instance()
+#	add_child(canvas_art_instance)

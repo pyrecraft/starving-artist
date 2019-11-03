@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Jackson Pollock Simulator"
+config/name="Starving Artist"
 run/main_scene="res://Root.tscn"
 config/icon="res://icon.png"
 
@@ -27,6 +27,8 @@ actions="*res://godot_redux/actions.gd"
 reducers="*res://godot_redux/reducers.gd"
 Constants="*res://Constants.gd"
 SaleLogic="*res://SaleLogic.gd"
+Headlines="*res://Headlines.gd"
+PaintConstants="*res://PaintConstants.gd"
 
 [display]
 
