@@ -172,23 +172,23 @@ func _draw():
 #		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
 #			'Starving Artist', shadow_color)
 #		draw_string(waku_font, font_position, 'Starving Artist', Color('#62d2a2'))
-		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
-			'Starving', shadow_color)
-		draw_string(waku_font, font_position, 'Starving', Color('#62d2a2'))
-		font_position.y += 100
-		font_position.x += 50
-		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
-			'Artist', shadow_color)
-		draw_string(waku_font, font_position, 'Artist', Color('#62d2a2'))
-		var multiplier = 1.25
+#		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
+#			'Starving', shadow_color)
+#		draw_string(waku_font, font_position, 'Starving', Color('#62d2a2'))
+#		font_position.y += 100
+#		font_position.x += 50
+#		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
+#			'Artist', shadow_color)
+#		draw_string(waku_font, font_position, 'Artist', Color('#62d2a2'))
+		var multiplier = 1.15
 		var x_offset = 630
 		var y_offset = 500
-		var start_position = Vector2(220, 90)
+		var start_position = Vector2(150, 10)
 		var end_position = Vector2(start_position.x * multiplier, start_position.y * multiplier)
-#		draw_line(start_position, Vector2(start_position.x + x_offset * multiplier, start_position.y), Color.black, 1)
-#		draw_line(start_position, Vector2(start_position.x, start_position.y + y_offset * multiplier), Color.black, 1)
-#		draw_line(Vector2(start_position.x + x_offset * multiplier, start_position.y + y_offset * multiplier), Vector2(start_position.x + x_offset * multiplier, start_position.y), Color.black, 1)
-#		draw_line(Vector2(start_position.x + x_offset * multiplier, start_position.y + y_offset * multiplier), Vector2(start_position.x, start_position.y + y_offset * multiplier), Color.black, 1)
+		draw_line(start_position, Vector2(start_position.x + x_offset * multiplier, start_position.y), Color.black, 1)
+		draw_line(start_position, Vector2(start_position.x, start_position.y + y_offset * multiplier), Color.black, 1)
+		draw_line(Vector2(start_position.x + x_offset * multiplier, start_position.y + y_offset * multiplier), Vector2(start_position.x + x_offset * multiplier, start_position.y), Color.black, 1)
+		draw_line(Vector2(start_position.x + x_offset * multiplier, start_position.y + y_offset * multiplier), Vector2(start_position.x, start_position.y + y_offset * multiplier), Color.black, 1)
 
 #		draw_line(Vector2(827, 50), Vector2(827, 500), Color.black, 1)
 #		draw_line(Vector2(197, 50), Vector2(197, 500), Color.black, 1)

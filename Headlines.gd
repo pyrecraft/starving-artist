@@ -3,7 +3,7 @@ extends Node
 const ENDING_HEADLINES = [
 	'Artist Didn\'t Starve In The End! Woohoo!',
 	'Made by PyreCraft for the Weekly Game Jam #120.',
-	'Click Next to See Your Final Stats!'
+	'Thanks for playing! Hope you had fun and made beautiful art.'
 ]
 
 func get_headline(criteria):
@@ -54,7 +54,7 @@ func get_headline(criteria):
 			return [
 				'National Campaign Seeks to Criminalize "Evil Weed"',
 				'Bretton Woods Establishes New Global Monetary System',
-				'Fires Erupt in Wine Country, Burning Millions of Trees'
+				'Fires Erupt in Wine Country, Burning Trees'
 			]
 		Constants.Criteria.LEFT_COVERAGE:
 			return [
@@ -64,7 +64,7 @@ func get_headline(criteria):
 			]
 		Constants.Criteria.RIGHT_COVERAGE:
 			return [
-				'Republican Dwight Eisenhower Shows He\'s Always Right',
+				'Republican Dwight Eisenhower Fights On',
 				'The International Fund Now Operates in Eastern Europe',
 				'Early Season Snowstorm Slows East Coast Commuters'
 			]

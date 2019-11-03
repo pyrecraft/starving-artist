@@ -3,7 +3,7 @@ extends Node2D
 signal paint_out
 
 const initial_state = preload('res://godot_redux/initial_state.gd')
-const waku_font = preload('res://WakuWakuFontLarge.tres')
+const waku_font = preload('res://WakuWakuFontMedium.tres')
 
 var color = Color.white
 var color_hex
@@ -63,32 +63,33 @@ func _draw():
 			set_tangent_vector(draw_points[i-1], draw_points[i])
 		if i > 1:
 			pass
-#			draw_connecting_rect(draw_points[i-2], draw_points[i-1])
-#			add_line_to_paint_grid(draw_points[i-2], draw_points[i-1], i)
+			draw_connecting_rect(draw_points[i-2], draw_points[i-1])
+			add_line_to_paint_grid(draw_points[i-2], draw_points[i-1], i)
 		draw_circle(draw_points[i].vec, draw_points[i].radius, draw_points[i].color)
-#		add_square_to_paint_grid_index(draw_points[i].vec, draw_points[i].radius * 3.0, draw_points[i].color, i)
+		add_square_to_paint_grid_index(draw_points[i].vec, draw_points[i].radius * 3.0, draw_points[i].color, i)
 	if len(draw_points) > 1:
 		var last_draw_point = draw_points[len(draw_points)-1]
 		last_draw_point.set_tangent_vecs(Vector2(last_draw_point.vec.x - last_draw_point.radius, last_draw_point.vec.y), \
 			Vector2(last_draw_point.vec.x + last_draw_point.radius, last_draw_point.vec.y))
 		set_scapegoat_vector(draw_points[len(draw_points) - 2], last_draw_point)
-#		draw_connecting_rect(draw_points[len(draw_points) - 2], last_draw_point)
-#		add_line_to_paint_grid(draw_points[len(draw_points) - 2], last_draw_point, len(draw_points))
+		draw_connecting_rect(draw_points[len(draw_points) - 2], last_draw_point)
+		add_line_to_paint_grid(draw_points[len(draw_points) - 2], last_draw_point, len(draw_points))
 
 	if is_showing_title:
-		var font_position = Vector2(260, 200)
+		var font_position = Vector2(257, 460)
 		var shadow_color = Color('#393e46')
+		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
+			'Starving Artist', shadow_color)
+		draw_string(waku_font, font_position, 'Starving Artist', Color('#3ec78c'))
+#		draw_string(waku_font, font_position, 'Starving Artist', Color('#596c68'))
 #		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
-#			'Starving Artist', shadow_color)
-#		draw_string(waku_font, font_position, 'Starving Artist', Color('#62d2a2'))
-		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
-			'Starving', shadow_color)
-		draw_string(waku_font, font_position, 'Starving', Color('#62d2a2'))
-		font_position.y += 100
-		font_position.x += 50
-		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
-			'Artist', shadow_color)
-		draw_string(waku_font, font_position, 'Artist', Color('#62d2a2'))
+#			'Starving', shadow_color)
+#		draw_string(waku_font, font_position, 'Starving', Color('#62d2a2'))
+#		font_position.y += 100
+#		font_position.x += 50
+#		draw_string(waku_font, Vector2(font_position.x * 1.01, font_position.y * 1.01), \
+#			'Artist', shadow_color)
+#		draw_string(waku_font, font_position, 'Artist', Color('#62d2a2'))
 
 func update_grid_state():
 	store.dispatch(actions.canvas_add_to_grid(grid_L))

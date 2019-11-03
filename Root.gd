@@ -27,6 +27,7 @@ func _ready():
 	state_L = init_state['game']['state']
 	day_L = init_state['game']['day']
 	previous_day = day_L
+#	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 #	$Background.queue_free()
 
 func _process(delta):
@@ -38,7 +39,11 @@ func set_initial_canvas_dimensions():
 	var offset_percentage := 30.0
 	var canvas_x = int(viewport_size.x * ((100.0 - offset_percentage) / 100.0)) + 50
 	var canvas_y = int(viewport_size.y * ((100.0 - offset_percentage) / 100.0)) - 100
+#	canvas_x = 535.5
+#	canvas_x = 620
+#	canvas_y = 480
 	store.dispatch(actions.canvas_set_dimensions(Vector2(canvas_x, canvas_y)))
+	print(Vector2(canvas_x, canvas_y))
 	var canvas_offset_x = int((viewport_size.x - canvas_x) / 2)
 	var canvas_offset_y = int((viewport_size.y - canvas_y) / 2)
 	store.dispatch(actions.canvas_set_starting_vector((Vector2(canvas_offset_x, canvas_offset_y))))
@@ -77,7 +82,7 @@ func handle_state_changed(prev_state, next_state):
 			$Canvas.clear_canvas_art()
 			store.dispatch(actions.game_set_state(Constants.State.PAINT))
 			store.dispatch(actions.canvas_set_grid(initialize_paint_grid()))
-			print('Initializing brand new grid!')
+#			print('Initializing brand new grid!')
 		Constants.State.CONFIRM_SELL:
 			confirm_node = confirm_box.instance()
 			confirm_node.set_confirm_type(Constants.ConfirmBox.SELL)
@@ -116,6 +121,3 @@ func initialize_paint_grid():
 		for x in range(get_viewport().size.x):
 			grid[y].append(null)
 	return grid
-
-func _on_MusicStartTimer_timeout():
-	$AudioStreamPlayer.play()

@@ -8,7 +8,7 @@ var GeneralPaints = [
 	'#07689f', # Blue
 	'#a56cc1', # Purple
 	'#222831', # Black
-	'#ffffff' # White
+	'#fbf0f0' # White
 ]
 
 var RandomPaints = [

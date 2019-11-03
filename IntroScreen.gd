@@ -106,10 +106,10 @@ func draw_bricks():
 		y_count += 1
 
 func draw_rounded_rect(rect, color, circle_radius):
-#	draw_circle(rect.position, circle_radius, color)
-#	draw_circle(Vector2(rect.position.x, rect.position.y + rect.size.y), circle_radius, color)
-#	draw_circle(Vector2(rect.position.x + rect.size.x, rect.position.y), circle_radius, color)
-#	draw_circle(Vector2(rect.position.x + rect.size.x, rect.position.y + rect.size.y), circle_radius, color)
+	draw_circle(rect.position, circle_radius, color)
+	draw_circle(Vector2(rect.position.x, rect.position.y + rect.size.y), circle_radius, color)
+	draw_circle(Vector2(rect.position.x + rect.size.x, rect.position.y), circle_radius, color)
+	draw_circle(Vector2(rect.position.x + rect.size.x, rect.position.y + rect.size.y), circle_radius, color)
 	draw_rect(Rect2(Vector2(rect.position.x - circle_radius, rect.position.y), \
 		Vector2(rect.size.x + (circle_radius * 2), rect.size.y)), color)
 	draw_rect(Rect2(Vector2(rect.position.x, rect.position.y - circle_radius), \

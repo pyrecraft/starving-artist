@@ -1,6 +1,7 @@
 extends Node
 
 const DEBUG_MODE = false
+const SCREEN_RECORD_MODE = false
 
 enum State {
 	PAINT,
