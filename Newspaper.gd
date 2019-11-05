@@ -19,7 +19,8 @@ func _ready():
 	
 	var close_button = button_inst.instance()
 	mission_L = store.get_state()['game']['mission']
-	add_child(close_button)
+	if mission_L.max_payout != 999: # Game End
+		add_child(close_button)
 	close_button.set_box_position(Vector2(900, 60))
 	close_button.set_box_dimensions(30, 30)
 	close_button.set_text_offset_x(3)

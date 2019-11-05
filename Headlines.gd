@@ -17,7 +17,7 @@ func get_headline(criteria):
 		Constants.Criteria.LOW_COVERAGE:
 			return [
 				'Time of Peace and Quiet Arises After Long War',
-				'In Taiwan, protests fizzle out as both sides agree',
+				'In Taiwan, Protests Fizzle Out as Both Sides Calm',
 				'Sky Nearly Transparent As Not a Single Cloud Encroaches'
 			]
 		Constants.Criteria.DARK_COLORS:
@@ -40,21 +40,21 @@ func get_headline(criteria):
 			]
 		Constants.Criteria.RED_COLORS:
 			return [
-				'Communist Flags Bright and Broken',
+				'Communist Flags Bleed as They Burn Post WWII',
 				'The new post-war Japanese constitution goes into effect',
 				'Large Fires Arise Advising Citizens to Beware'
 			]
 		Constants.Criteria.BLUE_COLORS:
 			return [
-				'A WWII booby trap explodes in ocean by Japan',
-				'Linda B. Buck, biologist, Wins Nobel Prize',
-				'Clear Skies, Blue and Beautiful. Not a cloud in sight!'
+				'A WWII Booby Trap Explodes in Ccean by Japan',
+				'Linda B. Buck, biologist, Wins Nobel Prize in Oceanography',
+				'Clear Skies, Blue and Beautiful. Not a Cloud in Sight!'
 			]
 		Constants.Criteria.GREEN_COLORS:
 			return [
 				'National Campaign Seeks to Criminalize "Evil Weed"',
 				'Bretton Woods Establishes New Global Monetary System',
-				'Fires Erupt in Wine Country, Burning Trees'
+				'Fires Erupt in Wine Country, Burning Trees Everywhere'
 			]
 		Constants.Criteria.LEFT_COVERAGE:
 			return [

@@ -43,7 +43,7 @@ func set_initial_canvas_dimensions():
 #	canvas_x = 620
 #	canvas_y = 480
 	store.dispatch(actions.canvas_set_dimensions(Vector2(canvas_x, canvas_y)))
-	print(Vector2(canvas_x, canvas_y))
+#	print(Vector2(canvas_x, canvas_y))
 	var canvas_offset_x = int((viewport_size.x - canvas_x) / 2)
 	var canvas_offset_y = int((viewport_size.y - canvas_y) / 2)
 	store.dispatch(actions.canvas_set_starting_vector((Vector2(canvas_offset_x, canvas_offset_y))))
@@ -101,6 +101,12 @@ func handle_state_changed(prev_state, next_state):
 		Constants.State.NEWS:
 			var news = newspaper.instance()
 			add_child(news)
+			if day_L == 11:
+				$SellButton.hide()
+				$ClearButton.hide()
+				$PaintStoreButton.hide()
+				$NewsButton.hide()
+				$PaintManager.hide()
 		Constants.State.STORE:
 			var paint_store_inst = paint_store.instance()
 			add_child(paint_store_inst)

@@ -16,7 +16,7 @@ autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -5.0
+volume_db = -10.049
 
 [node name="Area2D" type="Area2D" parent="."]
 

@@ -1,6 +1,7 @@
 extends Node2D
 
 var initial_state = load('res://godot_redux/initial_state.gd')
+const newspaper = preload('res://Newspaper.tscn')
 const button_inst = preload('res://Button.tscn')
 const waku_font = preload('res://WakuWakuFont.tres')
 const text_color = Color('#fbf0f0')
@@ -62,7 +63,7 @@ func spawn_next_button():
 
 func _on_ContinueButton_clicked():
 	store.dispatch(actions.game_set_day(day_L + 1))
-	store.dispatch(actions.game_set_mission(Constants.get_next_mission(day_L + 1)))
+	store.dispatch(actions.game_set_mission(Constants.get_next_mission(day_L)))
 	store.dispatch(actions.game_set_state(Constants.State.CLEAR))
 #	store.dispatch(actions.game_set_state(Constants.State.PAINT))
 #	store.dispatch(actions.canvas_set_grid(Constants.initialize_paint_grid_debug()))
@@ -221,10 +222,12 @@ func _on_TransitionTimer_timeout():
 			$GradeText.bbcode_text = $GradeText.bbcode_text + get_grade_bb_code(letter_grade)
 			current_transition_state = TransitionState.GRADE_SHOW
 		TransitionState.GRADE_SHOW:
-			if day_L != 10:
+			if day_L < 11:
 				spawn_next_button()
 			else:
-				$ThanksText.show()
+#				$ThanksText.show()
+				var news = newspaper.instance()
+				add_child(news)
 			current_transition_state = TransitionState.FINISHED
 		TransitionState.FINISHED:
 			pass

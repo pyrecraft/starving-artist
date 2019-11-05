@@ -26,7 +26,8 @@ enum Criteria {
 	BLUE_COLORS,
 	GREEN_COLORS,
 	LEFT_COVERAGE,
-	RIGHT_COVERAGE
+	RIGHT_COVERAGE,
+	GAME_END
 }
 
 enum ConfirmBox {
@@ -78,7 +79,7 @@ func get_next_mission(day):
 			return Mission.new(Headlines.get_headline(Criteria.GREEN_COLORS), Criteria.GREEN_COLORS, 750)
 		11:
 #			print('ENDING')
-			return Mission.new(Headlines.ENDING_HEADLINES, Criteria.GREEN_COLORS, 999)
+			return Mission.new(Headlines.ENDING_HEADLINES, Criteria.GAME_END, 999)
 
 class Mission:
 	var main_headline

@@ -74,10 +74,14 @@ func get_sale_price(info):
 			return min(max_price, max_price * (info.green_average))
 		Constants.Criteria.LEFT_COVERAGE:
 			var coverage_amount = info.left_coverage
-			return min(max_price, max_price * coverage_amount)
+			var right_coverage_amount = info.right_coverage
+			return min(max_price, max_price * max(0, (coverage_amount - right_coverage_amount)))
 		Constants.Criteria.RIGHT_COVERAGE:
 			var coverage_amount = info.right_coverage
-			return min(max_price, max_price * coverage_amount)
+			var left_coverage_amount = info.left_coverage
+			return min(max_price, max_price * max(0, (coverage_amount - left_coverage_amount)))
+		Constants.Criteria.GAME_END:
+			return 10000
 	return 0
 
 func get_letter_grade(payout, max_payout):
