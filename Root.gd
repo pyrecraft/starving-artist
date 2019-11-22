@@ -51,6 +51,7 @@ func set_initial_canvas_dimensions():
 	store.dispatch(actions.game_set_mission(Constants.get_next_mission(day_L)))
 	store.dispatch(actions.paint_set_random_paints_list(PaintConstants.get_random_paints_list()))
 	$PaintManager.initialize_first_paints()
+	$NewsTimer.start()
 
 func _on_store_changed(name, state):
 	if store.get_state() != null:
@@ -60,9 +61,9 @@ func _on_store_changed(name, state):
 			state_L = store.get_state()['game']['state']
 		if store.get_state()['game']['day'] != null:
 			day_L = store.get_state()['game']['day']
-#			if day_L == 11 and previous_day != day_L:
-#				store.dispatch(actions.game_set_state(Constants.State.GAME_OVER))
-#				previous_day = day_L
+			if previous_day != day_L:
+#				$NewsTimer.start()
+				previous_day = day_L
 
 func handle_state_changed(prev_state, next_state):
 	if prev_state == next_state:
@@ -116,7 +117,6 @@ func handle_state_changed(prev_state, next_state):
 			$PaintStoreButton.hide()
 			$NewsButton.hide()
 			$PaintManager.hide()
-			
 			var news = newspaper.instance()
 			add_child(news)
 
@@ -127,3 +127,9 @@ func initialize_paint_grid():
 		for x in range(get_viewport().size.x):
 			grid[y].append(null)
 	return grid
+
+
+func _on_NewsTimer_timeout():
+	var news = newspaper.instance()
+	add_child(news)
+	$AudioStreamPlayer.play(.85)

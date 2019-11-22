@@ -1,8 +1,14 @@
 extends Node
 
+#const ENDING_HEADLINES = [
+#	'Artist Didn\'t Starve In The End! Woohoo!',
+#	'Made by PyreCraft for the Weekly Game Jam #120.',
+#	'Thanks for playing! Hope you had fun and made beautiful art.'
+#]
+
 const ENDING_HEADLINES = [
 	'Artist Didn\'t Starve In The End! Woohoo!',
-	'Made by PyreCraft for the Weekly Game Jam #120.',
+	'All Art, Music, Design, and Programming by @pyrecraft',
 	'Thanks for playing! Hope you had fun and made beautiful art.'
 ]
 
@@ -10,9 +16,9 @@ func get_headline(criteria):
 	match criteria:
 		Constants.Criteria.LARGE_COVERAGE:
 			return [
-				'Huge Mess To Clean After End of Massive War',
-				'Cities Crowded Following Massive Population Growth Post-War',
-				'Large Cloud Coverage in Sky Suggests Potential Incoming Storm'
+				'Massive Mess to Clean Following World War II',
+				'Artists Succeed When Their Art Can Portray What is on the News',
+				'Large Cloud Coverage Incoming Suggests Messy Commute'
 			]
 		Constants.Criteria.LOW_COVERAGE:
 			return [
@@ -40,8 +46,8 @@ func get_headline(criteria):
 			]
 		Constants.Criteria.RED_COLORS:
 			return [
-				'Communist Flags Bleed as They Burn Post WWII',
-				'The new post-war Japanese constitution goes into effect',
+				'Communist Flags Burned in Ceremonies Post-WWII',
+				'The New Post-war Japanese Constitution Goes into Effect',
 				'Large Fires Arise Advising Citizens to Beware'
 			]
 		Constants.Criteria.BLUE_COLORS:

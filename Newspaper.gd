@@ -1,7 +1,7 @@
 extends Node2D
 
 const initial_state = preload('res://godot_redux/initial_state.gd')
-
+const waku_font_small = preload('res://WakuWakuFont.tres')
 const button_inst = preload('res://Button.tscn')
 const background_color = Color('#768996')
 const background_shadow_color = Color('#2a363b')
@@ -21,6 +21,9 @@ func _ready():
 	mission_L = store.get_state()['game']['mission']
 	if mission_L.max_payout != 999: # Game End
 		add_child(close_button)
+	elif Constants.IS_ADDICTING_GAMES:
+		JavaScript.eval("document.swag.endGame()")
+	
 	close_button.set_box_position(Vector2(900, 60))
 	close_button.set_box_dimensions(30, 30)
 	close_button.set_text_offset_x(3)
@@ -47,6 +50,9 @@ func assign_headlines(large, lower, side):
 func _on_CloseButton_clicked():
 	close_window()
 
+func _on_ResetButton_clicked():
+	get_tree().reload_current_scene()
+
 func close_window():
 	if mission_L.max_payout == 999: # Game End
 		return
@@ -57,6 +63,15 @@ func _draw():
 	draw_rounded_rect(Rect2(starting_point, dimensions), background_shadow_color, 25)
 	draw_rounded_rect(Rect2(starting_point, dimensions), background_color, 20)
 	draw_separation_lines()
+	if mission_L.max_payout == 999: # Game End
+		$Date.bbcode_text = str(2019)
+		var font_position = Vector2(650, 700)
+		var text_color = Color('#fbf0f0')
+		var text_shadow_color = Color('#393e46')
+		position.y += 5
+#		draw_string(waku_font_small, Vector2(font_position.x * 1.005, font_position.y * 1.005), \
+#			'Made by @pyrecraft', text_shadow_color)
+#		draw_string(waku_font_small, font_position, 'Made by @pyrecraft', text_color)
 
 func draw_separation_lines():
 	draw_title_main_headline_line()

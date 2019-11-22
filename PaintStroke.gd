@@ -52,7 +52,7 @@ func add_draw_point(pos, radius):
 	var next_draw_point = DrawPoint.new(pos, radius, color)
 	draw_points.append(next_draw_point)
 	if is_color_assigned:
-		paint_percentage -= sqrt(sqrt(radius)) / 2.0
+		paint_percentage -= sqrt(sqrt(radius)) / 2.5
 	update()
 
 func _draw():

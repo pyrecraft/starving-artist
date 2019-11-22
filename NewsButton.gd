@@ -71,7 +71,7 @@ func _draw():
 	draw_string(waku_font, Vector2(font_position.x * 1.002, font_position.y * 1.002), \
 		'News', money_shadow_color)
 	draw_string(waku_font, font_position, 'News', Color('#fbf0f0'))
-	if !has_seen_news:
+	if !has_seen_news and day_L != 1:
 		draw_circle(Vector2(box_position.x + 20, box_position.y + 10), 10, Color('#f85f73'))
 
 func set_collision_shape():

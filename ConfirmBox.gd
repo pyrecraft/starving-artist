@@ -62,7 +62,7 @@ func _on_YesButton_clicked():
 		Constants.ConfirmBox.CLEAR:
 			store.dispatch(actions.game_set_state(Constants.State.CLEAR))
 		Constants.ConfirmBox.SELL:
-			$AudioStreamPlayer.play()
+#			$AudioStreamPlayer.play()
 			store.dispatch(actions.game_set_state(Constants.State.SELL))
 	queue_free()
 

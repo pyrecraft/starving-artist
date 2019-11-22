@@ -32,7 +32,7 @@ PaintConstants="*res://PaintConstants.gd"
 
 [display]
 
-window/size/height=750
+window/size/width=900
 window/size/resizable=false
 
 [input]

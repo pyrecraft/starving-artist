@@ -51,37 +51,39 @@ func get_sale_price(info):
 		Constants.Criteria.DARK_COLORS:
 			var coverage_amount = info.canvas_coverage
 #			var coverage_boost = max(.2, coverage_amount / 2.0)
-			return min(max_price, max_price * ((1.0 - info.hsv_v_average)))
+			return min(max_price, (max_price * ((1.0 - info.hsv_v_average)) * ((2.0 * coverage_amount))))
 		Constants.Criteria.LIGHT_COLORS:
 			var coverage_amount = info.canvas_coverage
 #			var coverage_boost = max(.2, coverage_amount / 2.0)
-			return min(max_price, max_price * (info.hsv_v_average))
+			return min(max_price, (max_price * (info.hsv_v_average)) * (2.0 * coverage_amount))
 		Constants.Criteria.COLOR_VARIETY:
 			var coverage_amount = info.canvas_coverage
 #			var coverage_boost = min(.2, coverage_amount / 2.0)
-			return min(max_price, max_price * ((abs(info.color_variety/.5))))
+			return min(max_price, (max_price * (abs(info.color_variety/.5))) * (2.0 * coverage_amount))
 		Constants.Criteria.RED_COLORS:
 			var coverage_amount = info.canvas_coverage
 #			var coverage_boost = min(.2, coverage_amount / 2.0)
-			return min(max_price, max_price * (info.red_average))
+			return min(max_price, (max_price * (info.red_average)) * (2.0 * coverage_amount))
 		Constants.Criteria.BLUE_COLORS:
 			var coverage_amount = info.canvas_coverage
 #			var coverage_boost = min(.2, coverage_amount / 2.0)
-			return min(max_price, max_price * (info.blue_average))
+			return min(max_price, (max_price * (info.blue_average)) * (2.0 * coverage_amount))
 		Constants.Criteria.GREEN_COLORS:
 			var coverage_amount = info.canvas_coverage
 #			var coverage_boost = min(.2, coverage_amount / 2.0)
-			return min(max_price, max_price * (info.green_average))
+			return min(max_price, (max_price * (info.green_average)) * (2.0 * coverage_amount))
 		Constants.Criteria.LEFT_COVERAGE:
+			var total_coverage_amount = info.canvas_coverage
 			var coverage_amount = info.left_coverage
 			var right_coverage_amount = info.right_coverage
 			return min(max_price, max_price * max(0, (coverage_amount - right_coverage_amount)))
 		Constants.Criteria.RIGHT_COVERAGE:
+			var total_coverage_amount = info.canvas_coverage
 			var coverage_amount = info.right_coverage
 			var left_coverage_amount = info.left_coverage
 			return min(max_price, max_price * max(0, (coverage_amount - left_coverage_amount)))
 		Constants.Criteria.GAME_END:
-			return 10000
+			return 1000
 	return 0
 
 func get_letter_grade(payout, max_payout):

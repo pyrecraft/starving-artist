@@ -112,6 +112,7 @@ func _on_Area2D_mouse_exited():
 func buy_paint():
 	store.dispatch(actions.game_set_money(money_L - int(paint_price)))
 	store.dispatch(actions.paint_add_paint(this_paint))
+	store.dispatch(actions.paint_set_current_paint(this_paint))
 	$AudioStreamPlayer.play()
 
 func _on_Area2D_input_event(viewport, event, shape_idx):

@@ -2,6 +2,7 @@ extends Node2D
 
 const button_inst = preload('res://Button.tscn')
 const waku_font = preload('res://WakuWakuFontLarge.tres')
+const waku_font_medium = preload('res://WakuWakuFontInfo.tres')
 const waku_font_small = preload('res://WakuWakuFont.tres')
 
 const text_color = Color('#fbf0f0')
@@ -16,6 +17,7 @@ const starting_paint_yellow = '#f9ed69'
 const starting_paint_brown = '#393232'
 
 var font_position
+var is_clicked := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,13 +31,27 @@ func _draw():
 	draw_string(waku_font, Vector2(font_position.x * 1.05, font_position.y * 1.025), \
 		'Starving Artist', text_shadow_color)
 	draw_string(waku_font, font_position, 'Starving Artist', text_color)
-	font_position.y += 500
-	font_position.x -= 25
-	draw_string(waku_font_small, Vector2(font_position.x * 1.025, font_position.y * 1.005), \
-		'Made by PyreCraft for the Weekly Game Jam #120', text_shadow_color)
-	draw_string(waku_font_small, font_position, 'Made by PyreCraft for the Weekly Game Jam #120', text_color)
+	font_position.y += 375
+	font_position.x += 120
+	draw_string(waku_font_medium, Vector2(font_position.x * 1.005, font_position.y * 1.005), \
+		'Emulate the News with Art!', text_shadow_color)
+	draw_string(waku_font_medium, font_position, 'Emulate the News with Art!', text_color)
+	font_position.x += 410
+	font_position.y += 120
 	
+#	draw_string(waku_font_small, Vector2(font_position.x * 1.025, font_position.y * 1.005), \
+#		'Made by PyreCraft for the Weekly Game Jam #120', text_shadow_color)
+#	draw_string(waku_font_small, font_position, 'Made by PyreCraft for the Weekly Game Jam #120', text_color)
 	draw_palette()
+	if Constants.IS_ADDICTING_GAMES:
+		$"ag-logo".show()
+		$"ag-logo2".show()
+		draw_string(waku_font_small, Vector2(font_position.x * 1.005, font_position.y * 1.005), \
+			'Made by @pyrecraft', text_shadow_color)
+		draw_string(waku_font_small, font_position, 'Made by @pyrecraft', text_color)
+	else:
+		$"ag-logo".hide()
+		$"ag-logo2".hide()
 
 func get_starting_font_position():
 	var font_border_offset = .1
@@ -46,7 +62,7 @@ func get_starting_font_position():
 func spawn_play_button():
 	var play_button = button_inst.instance()
 	add_child(play_button)
-	play_button.set_box_position(Vector2(450, 580))
+	play_button.set_box_position(Vector2(450, 630))
 	play_button.set_text('Play')
 	play_button.set_text_offset_x(20)
 	play_button.set_colors(Color('#07689f'), Color('#055887'))
@@ -114,3 +130,17 @@ func draw_rounded_rect(rect, color, circle_radius):
 		Vector2(rect.size.x + (circle_radius * 2), rect.size.y)), color)
 	draw_rect(Rect2(Vector2(rect.position.x, rect.position.y - circle_radius), \
 		Vector2(rect.size.x, rect.size.y + (circle_radius * 2))), color)
+
+func _on_Area2D_mouse_entered() -> void:
+	$"ag-logo".modulate = Color('#e73c30')
+
+func _on_Area2D_mouse_exited() -> void:
+	$"ag-logo".modulate = Color.white
+
+func _on_Area2D_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton:
+		if !is_clicked:
+			is_clicked = true
+		else:
+			is_clicked = false
+			OS.shell_open('https://www.addictinggames.com/')
